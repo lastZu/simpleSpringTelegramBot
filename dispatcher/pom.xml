@@ -29,6 +29,19 @@
             <scope>test</scope>
         </dependency>
 
+        <!--TELEGRAM-->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots-spring-boot-starter</artifactId>
+            <version>${org.telegram.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>github.lastzu</groupId>
+            <artifactId>bot-maker</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -18,12 +18,7 @@
     </properties>
 
     <dependencies>
-        <!--TELEGRAM-->
-        <dependency>
-            <groupId>org.telegram</groupId>
-            <artifactId>telegrambots</artifactId>
-            <version>${org.telegram.version}</version>
-        </dependency>
+
     </dependencies>
 
 </project>
