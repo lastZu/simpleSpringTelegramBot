@@ -1,6 +1,9 @@
 package github.lastzu;
 
 import github.lastzu.answer.AnswerFactory;
+import github.lastzu.answer.Answers;
+import github.lastzu.contract.Request;
+import github.lastzu.contract.Response;
 
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
@@ -16,7 +19,7 @@ public class HandlingBot extends TelegramLongPollingBot {
     Logger log = LoggerFactory.getLogger(HandlingBot.class);
 
     public HandlingBot(String name, String token) {
-        this(name, token, new StartAnswerFactory());
+        this(name, token, Answers.getDefaultAnswerFactory());
     }
 
     public HandlingBot(String name, String token, AnswerFactory answerFactory) {
@@ -56,11 +59,11 @@ public class HandlingBot extends TelegramLongPollingBot {
     }
 
     private Request getRequest(Update update) {
-        return null;
+        return null; // TODO
     }
 
     private SendMessage getMessage(Response response) {
-        return  null;
+        return  null; // TODO
     }
 
     public void setAnswerFactory(AnswerFactory answerFactory) {
