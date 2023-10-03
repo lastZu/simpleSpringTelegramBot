@@ -17,7 +17,7 @@
 
 	<modules>
 		<module>dispatcher</module>
-		<module>bot-maker</module>
+		<module>answer-for-commands</module>
 	</modules>
 
 	<properties>

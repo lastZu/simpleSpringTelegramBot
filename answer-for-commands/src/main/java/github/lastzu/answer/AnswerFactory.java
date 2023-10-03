@@ -1,5 +1,8 @@
 package github.lastzu.answer;
 
+import github.lastzu.contract.Request;
+import github.lastzu.contract.Response;
+
 public interface AnswerFactory {
     void setRequest(Request request);
 

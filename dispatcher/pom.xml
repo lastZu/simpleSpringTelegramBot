@@ -35,9 +35,11 @@
             <artifactId>telegrambots-spring-boot-starter</artifactId>
             <version>${org.telegram.version}</version>
         </dependency>
+
+        <!--MODULES-->
         <dependency>
             <groupId>github.lastzu</groupId>
-            <artifactId>bot-maker</artifactId>
+            <artifactId>answer-for-commands</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
