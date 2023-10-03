@@ -14,9 +14,12 @@
 	<packaging>pom</packaging>
 	<name>simpleSpringTelegramBot</name>
 	<description>testing project for Spring</description>
+
 	<modules>
 		<module>dispatcher</module>
+		<module>bot-maker</module>
 	</modules>
+
 	<properties>
 		<!--BASIC-->
 		<java.version>17</java.version>
