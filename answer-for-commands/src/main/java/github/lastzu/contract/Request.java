@@ -7,6 +7,7 @@ package github.lastzu.contract;
  * @param text
  */
 public record Request (
+        String id,
         String command,
         String text
 ) {}

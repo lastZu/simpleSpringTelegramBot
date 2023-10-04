@@ -11,12 +11,14 @@ public class EmptyAnswer implements Answer {
     public Response getResponse(Request request) {
         if (request.command().equals("start")) {
             return new Response(
+                    "",
                     List.of("Test", "Rest"),
                     "What a you wont?"
             );
         }
 
         return new Response(
+                "",
                 new ArrayList<>(),
                 ""
         );

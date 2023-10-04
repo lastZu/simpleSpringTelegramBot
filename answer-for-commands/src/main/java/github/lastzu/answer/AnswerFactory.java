@@ -1,10 +1,12 @@
 package github.lastzu.answer;
 
 import github.lastzu.contract.Request;
+import github.lastzu.contract.RequestHandler;
 import github.lastzu.contract.Response;
+import github.lastzu.contract.ResponseHandler;
 
-public interface AnswerFactory {
-    void setRequest(Request request);
+public interface AnswerFactory<T, R> {
+    void setRequest(T original, RequestHandler<T> requestHandler);
 
-    Response getResponse();
+    R getResponse(ResponseHandler<R> responseHandler);
 }

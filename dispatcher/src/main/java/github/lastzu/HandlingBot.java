@@ -11,19 +11,22 @@ import org.slf4j.Logger;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HandlingBot extends TelegramLongPollingBot {
-    private AnswerFactory answerFactory;
+    private static final int MAX_KEYBOARD_COLUMNS = 3;
+    private AnswerFactory<Update, SendMessage> answerFactory;
     private final String name;
     Logger log = LoggerFactory.getLogger(HandlingBot.class);
 
-    public HandlingBot(String name, String token) {
-        this(name, token, Answers.getDefaultAnswerFactory());
-    }
-
-    public HandlingBot(String name, String token, AnswerFactory answerFactory) {
+    public HandlingBot(String name, String token, AnswerFactory<Update, SendMessage> answerFactory) {
         super(token);
         this.name = name;
         this.answerFactory = answerFactory;
@@ -34,7 +37,8 @@ public class HandlingBot extends TelegramLongPollingBot {
         log.info("Bot received updates");
 
         answerFactory.setRequest(
-                getRequest(update)
+                update,
+                this::getRequest
         );
         sendAnswer();
 
@@ -48,8 +52,9 @@ public class HandlingBot extends TelegramLongPollingBot {
 
     private void sendAnswer() {
         log.debug("Getting message");
-        Response answer = answerFactory.getResponse();
-        SendMessage message = getMessage(answer);
+        SendMessage message = answerFactory.getResponse(
+                this::getMessage
+        );
 
         try {
             execute(message);
@@ -60,11 +65,50 @@ public class HandlingBot extends TelegramLongPollingBot {
     }
 
     private Request getRequest(Update update) {
-        return null; // TODO
+        if (!update.hasMessage()) {
+            return Answers.getEmptyRequest();
+        }
+        Message message = update.getMessage();
+        return new Request(
+                message.getChatId().toString(),
+                message.getText(),
+                message.getText()
+        );
     }
 
     private SendMessage getMessage(Response response) {
-        return  null; // TODO
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(response.id());
+        sendMessage.setText(response.text());
+        InlineKeyboardMarkup keyboardMarkup = makeKeyboardMarkup(response.commands());
+        sendMessage.setReplyMarkup(keyboardMarkup);
+
+        return sendMessage;
+    }
+
+    private InlineKeyboardMarkup makeKeyboardMarkup(List<String> commands) {
+        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
+
+        for(String command : commands) {
+            List<InlineKeyboardButton> row = new ArrayList<>();
+            for (int i = 0; i < MAX_KEYBOARD_COLUMNS; i++) {
+                InlineKeyboardButton button = new InlineKeyboardButton(command);
+
+                String callBack = makeCallback(command);
+                button.setCallbackData(callBack);
+
+                row.add(button);
+            }
+            keyboard.add(row);
+        }
+        keyboardMarkup.setKeyboard(keyboard);
+
+        return keyboardMarkup;
+    }
+
+    private String makeCallback(String commandName) {
+        return commandName;
     }
 
     public void setAnswerFactory(AnswerFactory answerFactory) {

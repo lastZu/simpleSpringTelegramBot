@@ -10,6 +10,7 @@ final public class Answers {
     public static Request getEmptyRequest() {
         return new Request(
                 "",
+                "",
                 ""
         );
     }

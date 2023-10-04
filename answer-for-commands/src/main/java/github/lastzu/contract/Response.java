@@ -9,6 +9,7 @@ import java.util.List;
  * @param text
  */
 public record Response(
+        String id,
         List<String> commands,
         String text
 ) {}
