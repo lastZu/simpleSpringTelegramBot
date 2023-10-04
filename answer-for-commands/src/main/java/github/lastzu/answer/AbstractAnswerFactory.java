@@ -3,7 +3,7 @@ package github.lastzu.answer;
 import github.lastzu.contract.Request;
 import github.lastzu.contract.Response;
 
-abstract class AbstractAnswerFactory implements AnswerFactory{
+abstract class AbstractAnswerFactory implements AnswerFactory {
     private Request request;
     private Answer answer;
 
@@ -15,7 +15,7 @@ abstract class AbstractAnswerFactory implements AnswerFactory{
         return answer.getResponse(request);
     }
 
-    private void setAnswer(Answer answer) {
+    protected void setAnswer(Answer answer) {
         this.answer = answer;
     }
 }

@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>answer-for-commands</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <!--BASIC-->
