@@ -5,8 +5,8 @@ import github.lastzu.contract.RequestHandler;
 import github.lastzu.contract.Response;
 import github.lastzu.contract.ResponseHandler;
 
-public interface AnswerFactory<T, R> {
-    void setRequest(T original, RequestHandler<T> requestHandler);
+public interface AnswerFactory<Request, Response> {
+    void setRequest(Request original, RequestHandler<Request> requestHandler);
 
-    R getResponse(ResponseHandler<R> responseHandler);
+    Response getResponse(ResponseHandler<Response> responseHandler);
 }
