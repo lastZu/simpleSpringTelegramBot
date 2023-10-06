@@ -8,9 +8,6 @@ target/
 .mvn
 mvnw*
 
-### Temp files ###
-Main.java
-
 ### STS ###
 .apt_generated
 .classpath

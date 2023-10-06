@@ -50,6 +50,10 @@ public class HandlingBot extends TelegramLongPollingBot {
         return name;
     }
 
+    public void setAnswerFactory(AnswerFactory answerFactory) {
+        this.answerFactory = answerFactory;
+    }
+
     private void sendAnswer() {
         log.debug("Getting message");
         SendMessage message = answerFactory.getResponse(
@@ -71,7 +75,7 @@ public class HandlingBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         return new Request(
                 message.getChatId().toString(),
-                message.getText(),
+                message.getText(), // TODO
                 message.getText()
         );
     }
@@ -109,9 +113,5 @@ public class HandlingBot extends TelegramLongPollingBot {
 
     private String makeCallback(String commandName) {
         return commandName;
-    }
-
-    public void setAnswerFactory(AnswerFactory answerFactory) {
-        this.answerFactory = answerFactory;
     }
 }
