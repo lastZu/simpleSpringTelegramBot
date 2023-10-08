@@ -24,7 +24,7 @@ public class HandlingBot extends TelegramLongPollingBot {
     private static final int MAX_KEYBOARD_COLUMNS = 3;
     private AnswerFactory<Update, SendMessage> answerFactory;
     private final String name;
-    Logger log = LoggerFactory.getLogger(HandlingBot.class);
+    Logger log = LoggerFactory.getLogger(this.getClass());
 
     public HandlingBot(String name, String token, AnswerFactory<Update, SendMessage> answerFactory) {
         super(token);
@@ -36,29 +36,11 @@ public class HandlingBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         log.info("Bot received updates");
 
-        answerFactory.setRequest(
-                update,
-                this::getRequest
-        );
-        sendAnswer();
-
-        log.info("Bot finished send response");
-    }
-
-    @Override
-    public String getBotUsername() {
-        return name;
-    }
-
-    public void setAnswerFactory(AnswerFactory answerFactory) {
-        this.answerFactory = answerFactory;
-    }
-
-    private void sendAnswer() {
-        log.debug("Getting message");
-        SendMessage message = answerFactory.getResponse(
-                this::getMessage
-        );
+        SendMessage message = answerFactory
+                .setRequest(update)
+                .setRequestHandler(this::getRequest)
+                .setResponseHandler(this::getMessage)
+                .activate();
 
         try {
             execute(message);
@@ -66,6 +48,13 @@ public class HandlingBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             log.error("Can not send message", e);
         }
+
+        log.info("Bot finished send response");
+    }
+
+    @Override
+    public String getBotUsername() {
+        return name;
     }
 
     private Request getRequest(Update update) {

@@ -5,4 +5,6 @@ import github.lastzu.contract.Response;
 
 public interface Answer {
     Response getResponse(Request request);
+
+    Answer next();
 }

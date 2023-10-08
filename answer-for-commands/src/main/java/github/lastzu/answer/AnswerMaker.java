@@ -2,29 +2,27 @@ package github.lastzu.answer;
 
 import github.lastzu.contract.Request;
 import github.lastzu.contract.RequestHandler;
+import github.lastzu.contract.Response;
 import github.lastzu.contract.ResponseHandler;
 
-public class AnswerMaker<T, R> implements AnswerFactory<T, R> {
-    private Request request;
-    private Answer answer;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
+public class AnswerMaker<T, R> extends AbstractAnswerMaker<T, R> {
 
     public AnswerMaker(Answer answer) {
-        this.answer = answer;
+        setAnswer(answer);
     }
 
     @Override
-    public void setRequest(T original, RequestHandler<T> requestHandler) {
-        this.request = requestHandler.getRequest(original);
+    protected void beforeActivationWork() {
+
     }
 
     @Override
-    public R getResponse(ResponseHandler<R> responseHandler) {
-        return responseHandler.getResponse(
-                answer.getResponse(request)
-        );
-    }
+    protected void afterActivationWork() {
 
-    protected void setAnswer(Answer answer) {
-        this.answer = answer;
     }
 }

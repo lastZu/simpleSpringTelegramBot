@@ -6,21 +6,19 @@ import github.lastzu.contract.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmptyAnswer implements Answer {
+public class EchoAnswer implements Answer{
     @Override
     public Response getResponse(Request request) {
-        if (request.command().equals("start")) {
-            return new Response(
-                    "",
-                    List.of("Test", "Rest"),
-                    "What a you wont?"
-            );
+        if (request.command().equals("exit")) {
+            return null;
         }
 
+        List<String> commands = new ArrayList<>();
+        commands.add("exit");
         return new Response(
-                "",
-                new ArrayList<>(),
-                ""
+                request.id(),
+                commands,
+                request.text()
         );
     }
 
